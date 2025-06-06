@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원정보 수정</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/edit-profile.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+            <span th:if="${loginUser != null}">
+        <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+    </span>
+      <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+    </span>
+    </div>
+  </header>
+
+  <main class="edit-container">
+    <h2 class="edit-title">회원정보 수정</h2>
+
+    <div class="edit-form">
+      <div class="edit-profile-img">
+        <label for="profileImage">
+          <img src="../img/default-profile.png" alt="프로필" class="preview-img">
+        </label>
+        <input type="file" id="profileImage" accept="image/*" hidden>
+      </div>
+
+      <div class="edit-inputs">
+        <form th:action="@{|/users/edit/${user.id}|}" method="post">
+          <input type="text" placeholder="변경할 이름을 입력하세요." class="edit-input" name="name" th:value="${user.name}" required/>
+          <input type="text" placeholder="변경할 이메일을 입력하세요." class="edit-input" name="email" th:value="${user.email}" required/>
+          <input type="password" placeholder="비밀번호 변경" class="edit-input" name="password" th:value="${user.password}" required/>
+          <button class="save-btn" type="submit">수정사항 저장하기</button>
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+  <script src="/edit-profile.js"></script>
+</body>
+</html>

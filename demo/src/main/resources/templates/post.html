@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:nulth="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 상세보기</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/post.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+      <span th:if="${loginUser != null}">
+        <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+    </span>
+      <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+    </span>
+    </div>
+  </header>
+
+  <main class="post-container">
+    <div class="post-header">
+      <h2 class="post-title" th:text="${post.title}">제목</h2>
+      <span class="post-date" th:text="${post.createdAt}">2025.01.01</span>
+      <button class="edit-btn">
+        <a th:href="@{|/posts/edit/${post.postId}|}">✏️ 게시물 수정</a>
+        <form th:action="@{|/posts/delete/${post.postId}|}" method="post">
+          <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+        </form>
+      </button>
+     
+    </div>
+
+    <div class="post-box">
+      <p th:text="${post.content}">이곳은 게시물 본문 영역입니다. 여러 줄의 텍스트가 들어갈 수 있으며,
+         이미지와 함께 자연스럽게 배치됩니다.</p>
+      <div nulth:if="${post.mediaPath != l}">
+        <img th:src="@{${post.mediaPath}}" alt="미디어" style="max-width:300px;">
+      </div>
+<!--      <img src="../img/sample1.jpg" alt="예시 이미지">-->
+<!--      <p>본문 중간에 이미지가 들어간 형태도 가능합니다.</p>-->
+<!--      <img src="../img/sample2.jpg" alt="또 다른 예시 이미지">-->
+    </div>
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+  <script>
+    // URL에서 멘토 이름 가져와서 제목에 반영
+    const params = new URLSearchParams(window.location.search);
+    const mentorName = params.get('mentor');
+    if (mentorName) {
+      document.getElementById('postTitle').textContent = `${mentorName}의 게시글`;
+    }
+  </script>
+</body>
+</html>

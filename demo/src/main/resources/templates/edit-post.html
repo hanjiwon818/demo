@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 수정</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/write.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+      <span th:if="${loginUser != null}">
+        <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+    </span>
+      <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+    </span>
+    </div>
+  </header>
+
+  <main class="write-container">
+    <div class="write-header">
+      <h2>게시물 수정</h2>
+      <button class="submit-btn">수정 완료</button>
+    </div>
+
+    <div class="image-upload">
+      <label for="editImageInput">📷 사진 수정</label>
+      <span id="imageCount">0 / 10</span>
+      <input type="file" id="editImageInput" multiple accept="image/*">
+    </div>
+
+    <form class="write-form" th:action="@{|/posts/edit/${post.postId}|}" method="post" enctype="multipart/form-data">
+      <input type="text" placeholder="제목을 입력하세요." class="write-title" name="title" th:value="${post.title}" required>
+      <textarea placeholder="내용을 입력하세요." class="write-content" name="content" th:text="${post.content}" required></textarea>
+      <button class="submit-btn" type="submit">수정 완료</button>
+    </form>
+
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+  <script src="/edit-post.js"></script>
+</body>
+</html>

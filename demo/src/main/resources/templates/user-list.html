@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 목록</title>
+</head>
+<body>
+<h1>유저 목록</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>가입일</th>
+        <th>수정</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.createAt}"></td>
+        <td>
+            <form th:action="@{|/users/edit/${user.id}|}" method="get">
+                <button type="submit">수정</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{|/users/${user.id}|}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+            </form>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

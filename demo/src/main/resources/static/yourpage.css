@@ -1,0 +1,136 @@
+/* yourpage.css */
+
+.yourpage-container {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.mentor-profile {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  background-color: #eee;
+  border-radius: 10px;
+}
+
+.mentor-info h2 {
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+
+.mentor-field {
+  font-size: 16px;
+  font-weight: normal;
+  margin-left: 10px;
+  color: #666;
+}
+
+.rating {
+  color: #ffaa00;
+  font-size: 18px;
+}
+
+.message-btn {
+  margin-left: auto;
+  background-color: #5CB163;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.mentor-reviews h3 {
+  margin-top: 20px;
+  font-size: 20px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.review-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.review-list li {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.review-list li h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.review-list li p {
+  margin: 10px 0 0;
+  line-height: 1.5;
+}
+
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  margin: 0 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination button.active,
+.pagination button:hover {
+  background-color: #5CB163;
+  color: white;
+  border-color: #5CB163;
+}
+
+.message-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-top: 10px;
+}
+
+.message-label {
+  font-size: 14px;
+  color: #333;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.write-review-btn {
+  background-color: #5CB163;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.write-review-btn:hover {
+  background-color: #4ca152;
+}
+

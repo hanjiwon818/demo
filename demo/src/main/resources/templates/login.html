@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>tado. 로그인</title>
+  <link rel="stylesheet" href="/authstyle.css">
+  <link rel="stylesheet" href="/common.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">tado.</div>
+    <button class="mypage-btn" onclick="goToMyPage()">👤 마이페이지</button>
+  </header>
+
+  <div class="auth-container">
+    <div class="auth-logo">tado.</div>
+    <div class="auth-title">로그인</div>
+
+    <form th:action="@{/users/login}" method="post">
+      <input type="email" name="email" placeholder="이메일" class="auth-input"/><br/>
+      <input type="password" name="password" placeholder="비밀번호" class="auth-input"/><br/>
+      <button type="submit" class="auth-button">로그인</button>
+    </form>
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+    <div class="auth-footer">
+      회원이 아니신가요?
+      <a href="/users/new">회원가입 하러가기</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+  <script src="/login.js"></script>
+
+
+</body>
+</html>

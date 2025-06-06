@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:nulth="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>리뷰 보기</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/post.css">
+  <link rel="stylesheet" href="/post-review.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+     <span th:if="${loginUser != null}">
+        <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+    </span>
+      <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+    </span>
+    </div>
+  </header>
+
+  <main class="post-container">
+    <div class="post-header">
+      <h2 class="post-title" th:text="${review.reviewer?.name} + '님의 리뷰'"></h2>
+      <span class="post-date" th:text="${review.createdAt}">2025.01.01</span>
+    </div>
+
+    <div class="review-rating">★★★★★</div>
+
+    <div class="post-box">
+      <p th:text="${review.content}">
+        작성된 리뷰 내용입니다. 리뷰 상세내용이 여기에 표시됩니다.<br>
+        리뷰 상세내용입니다. 리뷰 상세내용입니다.
+      </p>
+      <div nulth:if="${review.photoPath != l}">
+        <img th:src="@{${review.photoPath}}" alt="미디어" style="max-width:300px;">
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+  <script src="/post-review.js"></script>
+</body>
+</html>

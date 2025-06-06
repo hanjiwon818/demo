@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>tado. 쪽지함</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/messages.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+      <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+      <button class="mypage-btn" onclick="goToMyPage()">👤 마이페이지</button>
+    </div>
+  </header>
+
+  <main class="message-container">
+    <h2 class="message-title">쪽지함</h2>
+
+    <div class="message-box">
+      <!-- 좌측 유저 목록 -->
+      <aside class="user-list">
+        <div class="user-item active">
+          <div class="user-img"></div>
+          <div class="user-info">
+            <div class="user-name">김백석 멘토님</div>
+            <div class="user-sub">IT · 개발</div>
+          </div>
+        </div>
+        <div class="user-item">
+          <div class="user-img"></div>
+        </div>
+      </aside>
+
+      <!-- 우측 대화창 -->
+      <section class="chat-section">
+        <div class="chat-header">
+          <strong>김백석 멘토님</strong>
+          <span class="chat-meta">평균 1시간 내 응답</span>
+        </div>
+
+        <div class="chat-content">
+          <div class="chat-bubble left">안녕하세요! 궁금한 게 있어요.</div>
+          <div class="chat-bubble left">혹시 이번 주에 상담 가능하신가요?</div>
+          <div class="chat-bubble right">네 가능합니다. 날짜 알려주세요 😊</div>
+        </div>
+
+        <div class="chat-input">
+          <input type="text" placeholder="메시지를 입력하세요...">
+          <button>전송</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="../js/common.js"></script>
+  <script src="../js/messages.js"></script>
+</body>
+</html>

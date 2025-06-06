@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>리뷰 작성</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/write.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo">tado.</div>
+  <div class="icons">
+    <span th:if="${loginUser != null}">
+        <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+    </span>
+    <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+    </span>
+  </div>
+</header>
+
+<main class="write-container">
+  <form class="write-form"
+        method="post"
+        th:action="@{/reviews}"
+        enctype="multipart/form-data"
+        onsubmit="return validateReviewForm()">
+    <div class="write-header">
+      <h2>리뷰 작성</h2>
+      <button type="submit" class="submit-btn">등록</button>
+    </div>
+
+    <div class="image-upload">
+      <label for="reviewImageInput">📷 사진 등록하기</label>
+      <span id="imageCount">0 / 10</span>
+      <input type="file" id="reviewImageInput" name="photoFile" multiple accept="image/*">
+    </div>
+
+    <input type="text" name="title" placeholder="리뷰 제목을 입력하세요." class="write-title" required>
+    <textarea name="content" placeholder="리뷰 내용을 입력하세요." class="write-content" required></textarea>
+    <input type="number" name="rating" min="1" max="5" placeholder="평점(1~5)" required>
+    <!-- 필요하다면 targetUserId, reviewerId hidden으로 전달 -->
+    <input type="hidden" name="targetUserId" th:value="${targetUser.id}">
+    <input type="hidden" name="reviewerId" th:value="${loginUser.id}">
+  </form>
+</main>
+
+<footer class="footer">
+  tado.
+</footer>
+
+<!--<script>
+  // 파일 개수 표시 및 10개 제한
+  const imageInput = document.getElementById('reviewImageInput');
+  const imageCount = document.getElementById('imageCount');
+  if (imageInput) {
+    imageInput.addEventListener('change', () => {
+      const count = imageInput.files.length;
+      imageCount.textContent = `${count} / 10`;
+      if (count > 10) {
+        alert("이미지는 최대 10개까지 업로드할 수 있습니다.");
+        imageInput.value = "";
+        imageCount.textContent = "0 / 10";
+      }
+    });
+  }
+
+  // 폼 유효성 검사
+  function validateReviewForm() {
+    const files = document.getElementById('reviewImageInput').files;
+    if (files.length > 10) {
+      alert('최대 10개의 이미지만 업로드 가능합니다.');
+      return false;
+    }
+    return true;
+  }
+</script>-->
+<script src="/common.js"></script>
+</body>
+</html>
+

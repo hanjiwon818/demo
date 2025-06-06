@@ -1,0 +1,117 @@
+<!--
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 작성</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/write.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+      <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+      <button class="messages-btn" onclick="goToMessages()">메세지</button>
+      <button class="mypage-btn" onclick="goToMyPage()">👤 마이페이지</button>
+    </div>
+  </header>
+
+  <main class="write-container">
+    <div class="write-header">
+      <h2>게시물 작성</h2>
+      <button class="submit-btn">등록</button>
+    </div>
+
+    <div class="image-upload">
+     <label for="imageInput">📷 사진 등록하기</label>
+     <span>0 / 10</span>
+     <input type="file" id="imageInput" multiple accept="image/*">
+    </div>
+
+    <form class="write-form">
+      <input type="text" placeholder="제목을 입력하세요." class="write-title">
+      <textarea placeholder="내용을 입력하세요." class="write-content"></textarea>
+    </form>
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+  <script src="/write.js"></script>
+
+    <script>
+    const imageInput = document.getElementById('imageInput');
+    const imageCount = document.getElementById('imageCount');
+
+    imageInput.addEventListener('change', () => {
+      const count = imageInput.files.length;
+      imageCount.textContent = `${count} / 10`;
+
+      if (count > 10) {
+        alert("이미지는 최대 10개까지 업로드할 수 있습니다.");
+        imageInput.value = "";
+        imageCount.textContent = "0 / 10";
+      }
+    });
+  </script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시물 작성</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/write.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo">tado.</div>
+  <div class="icons">
+      <span th:if="${loginUser != null}">
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+      </span>
+    <span th:unless="${loginUser != null}">
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+      </span>
+  </div>
+</header>
+
+<main class="write-container">
+  <form class="write-form" method="post" enctype="multipart/form-data" action="/posts">
+    <div class="write-header">
+      <h2>게시물 작성</h2>
+      <button type="submit" class="submit-btn">등록</button>
+    </div>
+
+    <div class="image-upload">
+      <label for="imageInput">📷 사진 등록하기</label>
+      <span id="imageCount">0 / 10</span>
+      <input type="file" id="imageInput" name="mediaFile" multiple accept="image/*">
+    </div>
+
+    <input type="text" name="title" placeholder="제목을 입력하세요." class="write-title" required>
+    <select name="category" required>
+      <option value="">카테고리 선택</option>
+      <option th:each="cat : ${categories}" th:value="${cat.categoryId}" th:text="${cat.name}"></option>
+    </select>
+    <textarea name="content" placeholder="내용을 입력하세요." class="write-content" required></textarea>
+  </form>
+</main>
+
+<footer class="footer">
+  tado.
+</footer>
+
+<script src="/common.js"></script>
+<script src="/write.js"></script>
+</body>
+</html>
+

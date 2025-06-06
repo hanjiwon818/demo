@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>tado. 마이페이지</title>
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/mypage.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+      <span th:if="${loginUser != null}">
+      <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+      <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+      <button class="messages-btn" onclick="goToMessages()">메세지</button>
+      <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+      </span>
+      <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()">메세지</button>
+    </span>
+    </div>
+  </header>
+
+  <main class="mypage-container">
+    <h2 class="mypage-title">마이페이지</h2>
+
+    <!-- 프로필 영역 -->
+    <section class="profile-section">
+      <div class="profile-info">
+        <div class="profile-img"></div>
+        <div>
+          <h3 th:text="${user.name}">님!</h3>
+          <span class="user-id" th:text="${user.email}"></span>
+          <div class="rating">★★★★★</div>
+        </div>
+      </div>
+      <button class="edit-button"
+              th:onclick="|location.href='/users/edit/${user.id}'|">
+        회원정보 수정 ✏️
+      </button>
+    </section>
+
+    <!-- 내가 작성한 글 -->
+    <section class="mypage-section">
+      <h4>작성한 글</h4>
+      <!--<ul class="list-items">
+        <li>
+          <div class="list-meta">
+            <span class="list-title">제목</span>
+            <span class="list-date">2025.01.01</span>
+          </div>
+          <p>작성글 내용입니다. 작성글 내용입니다. 작성글 내용입니다. 작성글 내용입니다.</p>
+          <a href="#" class="list-more">더보기 ></a>
+        </li>
+        <li>
+          <div class="list-meta">
+            <a class="list-title" th:href="@{|/posts/${post.postId}|}" th:text="${post.title}">제목</a>
+            <span class="list-date" th:text="${post.createdAt}">2025.01.01</span>
+          </div>
+          <p >작성글 내용입니다. 작성글 내용입니다. 작성글 내용입니다. 작성글 내용입니다.</p>
+          <a href="#" class="list-more">더보기 ></a>
+        </li>
+      </ul>-->
+      <ul class="list-items">
+        <li th:each="post : ${myPosts}">
+          <div class="list-meta">
+            <a class="list-title" th:href="@{|/posts/${post.postId}|}" th:text="${post.title}">제목</a>
+            <span class="list-date" th:text="${post.createdAt}">2025.01.01</span>
+          </div>
+          <p th:text="${post.content}">작성글 내용입니다...</p>
+          <a th:href="@{|/posts/${post.postId}|}" class="list-more">더보기 &gt;</a>
+        </li>
+      </ul>
+
+    </section>
+
+    <!-- 내가 작성한 리뷰 -->
+    <section class="mypage-section">
+      <h4>멘티의 후기</h4>
+      <!--<ul class="list-items">
+        <li>
+          <div class="list-meta">
+            <span class="list-title">김백석 멘토님</span>
+            <span class="rating">★★★★★</span>
+          </div>
+          <p>리뷰 상세내용입니다. 리뷰 상세내용입니다. 리뷰 상세내용입니다.</p>
+          <a href="#" class="list-more">더보기 ></a>
+        </li>
+        <li>
+          <div class="list-meta">
+            <span class="list-title">이백석 멘토님</span>
+            <span class="rating">★★★★★</span>
+          </div>
+          <p>리뷰 상세내용입니다. 리뷰 상세내용입니다. 리뷰 상세내용입니다.</p>
+          <a href="#" class="list-more">더보기 ></a>
+        </li>
+      </ul>-->
+      <ul class="review-list">
+        <li th:each="review : ${reviews}">
+          <div class="list-meta">
+            <span th:text="${review.reviewer.name}">리뷰작성자</span>
+            <span class="list-title" th:text="${review.rating} + '점'">5점</span>
+            <span class="list-date" th:text="${review.createdAt}">2025.01.01</span>
+          </div>
+          <a th:href="@{|/reviews/${review.reviewId}|}" th:text="${review.content}">작성글 내용입니다...</a>
+
+          <!-- 필요에 따라 더보기/상세보기 버튼 추가 -->
+        </li>
+      </ul>
+    </section>
+
+    <!-- 멘토 신청내역 -->
+    <section class="mypage-section">
+      <h4>멘토 신청내역</h4>
+      <div class="mentor-apply-grid">
+        <div class="mentor-card">
+          <div class="mentor-img"></div>
+          <div class="mentor-name">김백석 멘토님<br><small>디자인</small></div>
+        </div>
+        <div class="mentor-card">
+          <div class="mentor-img"></div>
+          <div class="mentor-name">이백석 멘토님<br><small>IT · 개발</small></div>
+        </div>
+        <div class="mentor-card">
+          <div class="mentor-img"></div>
+          <div class="mentor-name">박백석 멘토님<br><small>과외</small></div>
+        </div>
+        <div class="mentor-card">
+          <div class="mentor-img"></div>
+          <div class="mentor-name">정백석 멘토님<br><small>취미 · 자기계발</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    tado.
+  </footer>
+
+  <script src="/common.js"></script>
+</body>
+</html>

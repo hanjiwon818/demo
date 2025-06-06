@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>멘토 프로필</title>
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/yourpage.css">
+</head>
+<body>
+<header class="header">
+    <div class="logo">tado.</div>
+    <div class="icons">
+      <span th:if="${loginUser != null}">
+        <!-- 로그인한 경우: 아이디(또는 이름) 표시 -->
+        <span th:text="${loginUser.name}" onclick="goToMyPage()">로그인유저</span>님
+        <button class="messages-btn" onclick="goToMessages()">📩 메세지</button>
+        <button class="logout-btn" onclick="location.href='/users/logout'">로그아웃</button>
+    </span>
+        <span th:unless="${loginUser != null}">
+        <!-- 로그인 안 한 경우: 로그인 버튼 -->
+        <button class="login-btn" onclick="goToLogin()">🔑 로그인</button>
+        <button class="messages-btn" onclick="goToMessages()"> 📩메세지</button>
+    </span>
+    </div>
+</header>
+
+<main class="yourpage-container">
+    <section class="mentor-profile">
+        <div class="profile-image"></div>
+        <div class="mentor-info">
+            <h2 th:text="${user.name}">김백석 멘토님 <span class="mentor-field">IT · 개발</span></h2>
+            <div class="rating">★★★★★</div>
+        </div>
+
+        <!-- 텍스트와 버튼을 한 줄에 정렬 -->
+        <div class="message-area">
+            <span class="message-label">멘토에게 상담요청</span>
+            <button class="message-btn" onclick="goToMessages()">✉️</button>
+        </div>
+    </section>
+
+    <hr>
+
+    <section class="mentor-reviews">
+        <div class="review-header">
+            <h3>멘티의 리뷰</h3>
+            <a th:href="@{|/users/${user.id}/write-review|}" class="write-review-btn">리뷰 작성하기</a>
+        </div>
+        <ul class="review-list">
+            <li th:each="review : ${reviews}">
+                <div class="list-meta">
+                    <span th:text="${review.reviewer.name}">리뷰작성자</span>
+                    <span class="list-title" th:text="${review.rating} + '점'">5점</span>
+                    <span class="list-date" th:text="${review.createdAt}">2025.01.01</span>
+                </div>
+                <p th:text="${review.content}">작성글 내용입니다...</p>
+                <!-- 필요에 따라 더보기/상세보기 버튼 추가 -->
+            </li>
+        </ul>
+
+        <div class="pagination" id="reviewPagination"></div>
+    </section>
+</main>
+
+<footer class="footer">
+    tado.
+</footer>
+
+<script src="/common.js"></script>
+<script src="/yourpage.js"></script>
+</body>
+</html>
